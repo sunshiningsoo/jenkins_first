@@ -9,7 +9,7 @@ pipeline {
     }
     post{
         always {
-            echo "Hello, this is message in post section and always excuted, success or not."
+            echo "Hello, this is message in post section and always excuted,  success or not."
         }
     }
 }
