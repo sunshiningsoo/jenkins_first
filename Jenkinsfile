@@ -14,7 +14,7 @@ pipeline {
             }
         }
     }
-    
+     
     // section : post
     // stage가 종료된 후에 조건에 따라 실행됩니다.
     post{
