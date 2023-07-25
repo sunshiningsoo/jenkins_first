@@ -5,6 +5,7 @@ pipeline {
         // build stage에서는 flask와 parameterized 패키지를 설치합니다.
         stage('build') {
             steps {
+                sh 'whoami; id'
                 sh 'pip3 install flask parameterized'
             }
         }
