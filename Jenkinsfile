@@ -1,11 +1,15 @@
 pipeline {
     // bitnami/pytorch 이미지를 사용합니다.    
-    agent { docker { image 'bitnami/pytorch:latest' } }
+    agent { 
+        docker { 
+            image 'bitnami/pytorch:latest' 
+            args '-u 1001:0'
+        } 
+    }
     stages {
         // build stage에서는 flask와 parameterized 패키지를 설치합니다.
         stage('build') {
             steps {
-                sh 'id'
                 sh 'pip3 install flask parameterized'
             }
         }
