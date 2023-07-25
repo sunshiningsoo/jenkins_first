@@ -1,22 +1,19 @@
 pipeline {    
-    agent { docker { image 'python:3.11.4-alpine' } }
+    agent { docker { image 'bitnami/pytorch:latest' } }
     stages {
         stage('build') {
             steps {
-                sh 'python --version'
+                sh 'pip3 install flask parameterized'
             }
         }
 
         // 새로운 스테이지를 추가했습니다. exit(0), 즉 성공한 스테이지로 만듭니다.
-        stage('success_stage') {
+        stage('test') {
             steps {
-                sh 'echo "exit(0)" > s.py; python3 s.py'
-            }
-        }
-        // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
-        stage('failure_stage') {
-            steps {
-                sh 'echo "exit(255)" > f.py; python3 f.py'
+                sh' cd train'
+                sh 'python3 -m unittest train_test.py'
+                sh 'cd ../infer'
+                sh 'python3 infer_Test.py'
             }
         }
     }    
