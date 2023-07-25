@@ -17,7 +17,9 @@ pipeline {
         // test stage에서는 unittest를 진행합니다.
         stage('test') {
             steps {
-                sh' cd train'
+                sh 'pwd'
+                sh 'ls'
+                sh 'cd train'
                 sh 'python3 train.py'
 //                sh 'python3 -m unittest train_test.py'
                 sh 'cd ../infer'
