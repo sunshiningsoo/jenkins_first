@@ -6,10 +6,16 @@ pipeline {
                 sh 'python --version'
             }
         }
-                // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
+        // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
+        stage('abort_stage') {
+            steps {
+                sh 'not_exist_command'
+            }
+        }
+        // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
         stage('failure_stage') {
             steps {
-                sh 'echo "exited(1)" > f.py; python3 f.py'
+                sh 'echo "exit(1)" > f.py; python3 f.py'
             }
         }
         // 새로운 스테이지를 추가했습니다. exit(0), 즉 성공한 스테이지로 만듭니다.
