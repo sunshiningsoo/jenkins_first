@@ -16,7 +16,7 @@ pipeline {
         // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
         stage('failure_stage') {
             steps {
-                sh 'echo "exit(1)" > f.py; python3 f.py'
+                sh 'echo "exit(255)" > f.py; python3 f.py'
             }
         }
     }    
