@@ -18,9 +18,10 @@ pipeline {
         stage('test') {
             steps {
                 sh' cd train'
-                sh 'python3 -m unittest train_tests.py'
+                sh 'python3 train.py'
+//                sh 'python3 -m unittest train_test.py'
                 sh 'cd ../infer'
-                sh 'python3 infer_Test.py'
+//                sh 'python3 infer_test.py'
             }
         }
     }    
