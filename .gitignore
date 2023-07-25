@@ -2,3 +2,4 @@ testdatapool/
 .venv/
 *.gz
 __pycache__/
+model/
