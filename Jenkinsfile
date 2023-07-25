@@ -9,7 +9,7 @@ pipeline {
         // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
         stage('abort_stage') {
             steps {
-                sh 'not_exist_command'
+                sh 'echo "assert 1 == 2" > a.py; python3 a.py'
             }
         }
         // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
