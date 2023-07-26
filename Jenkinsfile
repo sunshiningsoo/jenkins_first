@@ -20,15 +20,13 @@ pipeline {
                     cd train
                     python3 -m unittest train_test.py
                 '''
-            }
-            steps {
                 sh '''
                     cd infer
                     python3 infer_Test.py
                 '''
             }
         }
-    }    
+    }
     post {
         // 유닛 테스트가 실패
         failure {
