@@ -9,9 +9,8 @@ pipeline {
             steps {
                 // 유닛 테스트 실행
                 sh '''cd train
-                pwd
+                python3 -m unittest train/train_test.py
                 '''
-                sh 'python3 -m unittest train/train_test.py'
             }
         }
 
@@ -33,7 +32,7 @@ pipeline {
     post {
         // 유닛 테스트가 실패하면 알림
         failure {
-            mail to: 'your-email@example.com', subject: 'Unit Test Failed', body: "Build #${env.BUILD_NUMBER} failed due to unit test failures."
+            echo "Fail"
         }
     }
 }
