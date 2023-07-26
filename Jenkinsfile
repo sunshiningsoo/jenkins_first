@@ -1,38 +1,36 @@
 pipeline {
-    agent { docker { image 'python:3.11.4-alpine' } }
+
+    agent any
+
     stages {
-        stage('build') {
+
+
+        stage('UnitTest') {
             steps {
-                sh 'python --version'
-            }
-        }
-        // 새로운 스테이지를 추가했습니다. exit(1), 즉 실패한 스테이지를 만듭니다.
-        stage('failure_stage') {
-            steps {
-                sh 'echo "exit(1)" > f.py; python3 f.py'
-            }
-        }
-        // 새로운 스테이지를 추가했습니다. exit(0), 즉 성공한 스테이지로 만듭니다.
-        stage('success_stage') {
-            steps {
-                sh 'echo "exit(0)" > s.py; python3 s.py'
+                // 유닛 테스트 실행
+                sh 'python -m unittest discover'
             }
         }
 
-    }    
-    post{
-        // success, failure, aborted를 추가하였습니다.
-        success {
-            echo "Only success"
+        stage('DockerBuildAndPush') {
+            steps {
+                // 도커 이미지 빌드
+                script {
+                    def dockerImage = docker.build("jenkinstest:0")
+                }
+
+                // 도커 허브에 푸시
+//                withDockerRegistry([credentialsId: "your-dockerhub-credentials", url: "https://index.docker.io/v1/"]) {
+//                    dockerImage.push()
+//                }
+            }
         }
+    }
+
+    post {
+        // 유닛 테스트가 실패하면 알림
         failure {
-            echo "Only failure"
-        }
-        aborted {
-            echo "Only aborted"
-        }        
-        always {
-            echo "Always, success or not"
+            mail to: 'your-email@example.com', subject: 'Unit Test Failed', body: "Build #${env.BUILD_NUMBER} failed due to unit test failures."
         }
     }
 }
