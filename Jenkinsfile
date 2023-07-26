@@ -1,8 +1,8 @@
 pipeline {
+    // bitnami/pytorch 이미지를 사용합니다.    
     agent none
     stages {        
         // Test stage에서는 테스트 환경을 만들고 unittest를 수행합니다.
-        // Test 환경은 bitnami/pytorch로 만든 컨테이너에 패키지를 추가 설치합니다.
         stage('Test') {
             agent { 
                 docker { 
@@ -23,13 +23,22 @@ pipeline {
                 '''
             }
         }
+
+        // test stage에서는 unittest를 진행합니다.
+        stage('BuildImage') {
+            agent { node {label 'docker_build' } }           
+            steps {
+                script {
+                    def trainImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
+                    def trainImage = docker.build("inferimage:0", "-f ./Dockerfile.infer .")
+                }
+            }
+        }
     }
     post {
-        // 유닛 테스트가 실패
         failure {
             echo "Fail"
         }
-        // 유닛 테스트가 성공
         success {
             echo "Success"
         }
