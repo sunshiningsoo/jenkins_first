@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     def trainImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
-                    def trainImage = docker.build("inferimage:0", "-f ./Dockerfile.infer .")
+                    def inferImage = docker.build("inferimage:0", "-f ./Dockerfile.infer .")
                 }
             }
         }
