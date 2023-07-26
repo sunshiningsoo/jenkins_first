@@ -1,12 +1,13 @@
 pipeline {
+    // bitnami/pytorch 이미지를 사용합니다.    
     agent none
     stages {        
-        // Test stage에서는 테스트 환경을 만들고 unittest를 수행합니다.
-        // Test 환경은 bitnami/pytorch로 만든 컨테이너에 패키지를 추가 설치합니다.
+        // build stage에서는 flask와 parameterized 패키지를 설치합니다.
         stage('Test') {
             agent { 
                 docker { 
                     image 'bitnami/pytorch:latest' 
+                    args '-u 1001:0'
                 }
             } 
             
@@ -20,6 +21,16 @@ pipeline {
                     cd infer
                     python3 infer_test.py
                 '''
+            }
+        }
+
+        // test stage에서는 unittest를 진행합니다.
+        stage('BuildImage') {
+            agent { node {label 'docker_build' } }           
+            steps {
+                script {
+                    def dockerImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
+                }
             }
         }
     }
