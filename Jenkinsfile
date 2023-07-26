@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        // test stage에서는 unittest를 진행합니다.
+        // BuildImage stage에서는 도커 이미지를 생성합니다.
         stage('BuildImage') {
             agent { node {label 'docker_build' } }           
             steps {
@@ -32,6 +32,22 @@ pipeline {
                     def trainImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
                     def inferImage = docker.build("inferimage:0", "-f ./Dockerfile.infer .")
                 }
+            }
+        }
+
+        // TestDeploy stage에서는 도커 서비스를 배포합니다.
+        stage('BuildImage') {
+            agent { node {label 'docker_build' } }           
+            steps {
+                sh'''
+                    if docker service ls --format '{{.Name}}' | grep -q inferservice; then
+                        # 도커 스웜 서비스 업데이트
+                        docker service update --image inferimage:0 --update-parallelism 1 --update-delay 10s inferservice
+                    else
+                        # 도커 스웜 서비스 생성
+                        docker service create -t --mount type=bind,source=./model,target=/model -p 5001:5001 --replicas=3 --name inferservice inferimage:0
+                    fi
+                '''
             }
         }
     }
