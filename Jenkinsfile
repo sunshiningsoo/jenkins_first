@@ -27,6 +27,11 @@ pipeline {
                 '''
             }
         }
+        stage('BuildImage') {
+            steps {
+                sh 'docker build -f Docker.train -t trainimage:test .'
+            }
+        }
     }
     post {
         // 유닛 테스트가 실패
