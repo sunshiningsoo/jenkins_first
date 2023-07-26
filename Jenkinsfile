@@ -4,8 +4,10 @@ pipeline {
         stage('TestTrain') {
             steps {
                 // 유닛 테스트 실행
-                sh 'cd train'
-                sh 'python3 -m unittest train_test.py'
+                sh '''
+                    cd train
+                    python3 -m unittest train_test.py
+                '''
             }
         }
     }
