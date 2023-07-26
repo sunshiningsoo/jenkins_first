@@ -28,7 +28,7 @@ pipeline {
             }
         }
         stage('BuildImage') {
-            agent any
+            agent node
             steps {
                 script {
                     def dockerImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
