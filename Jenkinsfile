@@ -8,7 +8,7 @@ pipeline {
         stage('UnitTest') {
             steps {
                 // 유닛 테스트 실행
-                sh 'python -m unittest discover'
+                sh 'python3 -m unittest discover'
             }
         }
 
