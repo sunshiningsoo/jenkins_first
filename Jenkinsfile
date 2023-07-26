@@ -29,7 +29,9 @@ pipeline {
         }
         stage('BuildImage') {
             steps {
-                def dockerImage = docker.build "trainimage:0", "-f ./Dockerfile.train ."
+                script {
+                    def dockerImage = docker.build "trainimage:0", "-f ./Dockerfile.train ."
+                }
             }
         }
     }
