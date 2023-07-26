@@ -7,6 +7,7 @@ pipeline {
             agent { 
                 docker { 
                     image 'bitnami/pytorch:latest' 
+                    args '-u 1001:0'
                 }
             } 
             
