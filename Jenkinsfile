@@ -22,7 +22,7 @@ pipeline {
                     python3 -m unittest train_test.py
                 '''
                 sh '''
-                    cd ../infer
+                    cd infer
                     python3 infer_Test.py
                 '''
             }
