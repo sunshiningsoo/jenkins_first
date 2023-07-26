@@ -8,4 +8,4 @@ ENV LIBPATH='/module'
 ENV MODELPATH='/model/'
 ENV DATAPAHT='/data/'
 ENTRYPOINT ["python3"]
-CMD ["train_new.py"]
+CMD ["train.py"]
