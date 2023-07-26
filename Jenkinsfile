@@ -8,7 +8,7 @@ pipeline {
         stage('UnitTest') {
             steps {
                 // 유닛 테스트 실행
-                cd train
+                sh 'cd train'
                 sh 'python3 -m unittest train/train_test.py'
             }
         }
