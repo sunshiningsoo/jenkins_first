@@ -1,42 +1,24 @@
 pipeline {
-    // bitnami/pytorch 이미지를 사용합니다.    
-    agent { 
-        docker { 
-            image 'bitnami/pytorch:latest' 
-            args '-u 1001:0'
-        } 
-    }
+	// section : agent
+	// docker agent를 사용합니다. 이때 사용하는 도커 이미지는 python:3.11.4-alpine입니다.
+    agent { docker { image 'python:3.11.4-alpine' } }
+    
+    // section : stages
+    // 하나의 stage를 가진 간단한 파이프라인입니다.
     stages {
-        // build stage에서는 flask와 parameterized 패키지를 설치합니다.
+    	// 'build' stage를 시작합니다.
         stage('build') {
+        	// python 버전을 출력합니다.
             steps {
-                sh 'pip3 install flask parameterized'
+                sh 'python --version'
             }
         }
-
-        // test stage에서는 unittest를 진행합니다.
-        stage('test') {
-            steps {
-                sh 'pwd'
-                sh 'ls'
-                sh 'cd train'
-                sh 'python3 train.py'
-//                sh 'python3 -m unittest train_test.py'
-                sh 'cd ../infer'
-//                sh 'python3 infer_test.py'
-            }
-        }
-    }    
+    }
+     
+    // section : post
+    // stage가 종료된 후에 조건에 따라 실행됩니다.
     post{
-        success {
-            echo "Only success"
-        }
-        failure {
-            echo "Only failure"
-        }
-        aborted {
-            echo "Only aborted"
-        }        
+    	// always는 성공, 실패 여부와 무관하게 실행됩니다.
         always {
             echo "Always, success or not"
         }
