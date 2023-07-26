@@ -1,4 +1,3 @@
-testdatapool/
 .venv/
 *.gz
 __pycache__/
