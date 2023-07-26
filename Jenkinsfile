@@ -28,6 +28,7 @@ pipeline {
             }
         }
         stage('BuildImage') {
+            agent any
             steps {
                 sh 'docker build -f Docker.train -t trainimage:test .'
             }
