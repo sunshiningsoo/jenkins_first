@@ -23,14 +23,14 @@ pipeline {
                 '''
                 sh '''
                     cd infer
-                    python3 infer_Test.py
+                    python3 infer_test.py
                 '''
             }
         }
         stage('BuildImage') {
             steps {
                 script {
-                    def dockerImage = docker.build "trainimage:0", "-f ./Dockerfile.train ."
+                    def dockerImage = docker.build("trainimage:0", "-f ./Dockerfile.train .")
                 }
             }
         }
