@@ -9,7 +9,7 @@ pipeline {
             steps {
                 // 유닛 테스트 실행
                 sh '''cd train
-                python3 -m unittest train/train_test.py
+                python3 -m unittest train_test.py
                 '''
             }
         }
