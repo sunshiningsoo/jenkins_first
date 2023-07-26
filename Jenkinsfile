@@ -36,7 +36,7 @@ pipeline {
         }
 
         // TestDeploy stage에서는 도커 서비스를 배포합니다.
-        stage('BuildImage') {
+        stage('TestDeploy') {
             agent { node {label 'docker_build' } }           
             steps {
                 sh'''
